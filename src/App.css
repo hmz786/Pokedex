@@ -1,19 +1,175 @@
-.App {
-  text-align: center;
+body, .App {
+  min-height: 100vh;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
-.App{
-  background-color:aquamarine;
+.App {
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(to bottom, #87CEEB, #1E90FF);
   height: 100vh;
 }
-.pokedex-content{
+
+.pixel-beach {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 120px;
+  background: url('https://i.imgur.com/0Z6l5bF.png') repeat-x bottom;
+  background-size: contain;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.pixel-cloud {
+  position: absolute;
+  top: 60px;
+  width: 120px;
+  height: 60px;
+  background: url('https://i.imgur.com/1bX5QH6.png') no-repeat center/contain;
+  opacity: 0.85;
+  z-index: 2;
+  animation: cloudMove 60s linear infinite;
+}
+.pixel-cloud.cloud2 {
+  top: 120px;
+  left: 30vw;
+  width: 90px;
+  height: 45px;
+  opacity: 0.7;
+  animation-duration: 80s;
+}
+.pixel-cloud.cloud3 {
+  top: 90px;
+  left: 60vw;
+  width: 100px;
+  height: 50px;
+  opacity: 0.6;
+  animation-duration: 100s;
+}
+@keyframes cloudMove {
+  0% { left: -150px; }
+  100% { left: 110vw; }
+}
+
+.background-animation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.flame {
+  position: absolute;
+  width: 38px;
+  height: 60px;
+  opacity: 0.85;
+  filter: blur(0.5px) brightness(1.1);
+  pointer-events: none;
+}
+
+.flame-inner {
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(ellipse at 50% 60%, #fffde4 0%, #ffd700 30%, #ff9800 60%, #ff5722 80%, transparent 100%);
+  border-radius: 50% 50% 60% 60%/60% 60% 100% 100%;
+  box-shadow: 0 0 32px 8px #ff9800, 0 0 64px 16px #ff5722;
+  animation: flameFlicker 1.2s infinite alternate;
+}
+
+@keyframes flameFlicker {
+  0% { transform: scaleY(1) scaleX(1) rotate(-2deg); filter: brightness(1.1); }
+  50% { transform: scaleY(1.08) scaleX(0.95) rotate(2deg); filter: brightness(1.3); }
+  100% { transform: scaleY(0.95) scaleX(1.05) rotate(-1deg); filter: brightness(1.05); }
+}
+
+.water {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 30%;
+  background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.3));
+  clip-path: polygon(
+    0% 0%,
+    100% 0%,
+    100% 100%,
+    75% 100%,
+    50% 80%,
+    25% 100%,
+    0% 100%
+  );
+}
+
+.cloud {
+  position: absolute;
+  top: 20%;
+  left: -200px;
+  width: 200px;
+  height: 60px;
+  background: white;
+  border-radius: 50px;
+  opacity: 0.8;
+}
+
+.cloud:before,
+.cloud:after {
+  content: '';
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+}
+
+.cloud:before {
+  width: 100px;
+  height: 100px;
+  top: -50px;
+  left: 25px;
+}
+
+.cloud:after {
+  width: 80px;
+  height: 80px;
+  top: -35px;
+  right: 25px;
+}
+
+.cloud2 {
+  top: 40%;
+  width: 300px;
+  height: 80px;
+}
+
+.pokedex-content {
+  position: relative;
+  z-index: 2;
   height: 100%;
   display: flex;
   gap: 0.5rem;
   align-items: center;
   justify-content: center;
+  animation: fadeIn 1s ease-out;
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
 .pokedexForm,.pokemon-details{
   height: 30rem;
@@ -24,6 +180,18 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .decoration{
@@ -181,4 +349,331 @@
 
 .errorHolder p{
   margin: 0;
+}
+
+/* --- Style Pokédex Livre --- */
+.pokedex-book {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+  width: 100vw;
+  gap: 0;
+  position: relative;
+  z-index: 2;
+}
+
+.pokedex-page {
+  width: 350px;
+  height: 500px;
+  background: #d32f2f;
+  border-radius: 20px 0 0 20px;
+  box-shadow: 8px 8px 0 #a31515, 0 0 0 8px #fff inset;
+  margin: 0;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.pokedex-right {
+  border-radius: 0 30px 30px 0;
+  margin-left: 0;
+  background: linear-gradient(135deg, #232526 0%, #414345 100%);
+  box-shadow: 12px 12px 0 #a31515, 0 0 0 8px #fff inset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pokedex-left {
+  border-radius: 20px 0 0 20px;
+  margin-right: 0;
+  background: #c62828;
+  box-shadow: 8px 8px 0 #a31515, 0 0 0 8px #fff inset;
+}
+
+.pokedex-page h2 {
+  color: #fff;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 1.1rem;
+  margin: 20px 0 10px 0;
+  letter-spacing: 2px;
+  text-align: left;
+}
+
+.pokedex-page input[type="text"] {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 2px solid #fff;
+  background: #fff8f8;
+  font-size: 1rem;
+  margin-bottom: 15px;
+  outline: none;
+}
+
+.pokemon-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  overflow-y: auto;
+  flex: 1;
+  background: #fff8f8;
+  border-radius: 8px;
+  box-shadow: 0 0 0 2px #fff inset;
+}
+
+.pokemon-list li {
+  padding: 10px 12px;
+  cursor: pointer;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.9rem;
+  color: #b71c1c;
+  border-bottom: 1px solid #e0e0e0;
+  transition: background 0.2s, color 0.2s;
+}
+
+.pokemon-list li.selected, .pokemon-list li:hover {
+  background: #ffcdd2;
+  color: #d32f2f;
+}
+
+.pokedex-right .pokemon-details {
+  margin-top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+.pokedex-right .pokemonScreen {
+  background: repeating-linear-gradient(0deg, #263238 0px, #263238 8px, #2e3a4a 8px, #2e3a4a 16px);
+  border-radius: 18px;
+  box-shadow: 0 0 24px 4px #00e5ff, 0 0 0 4px #fff inset;
+  padding: 32px 24px 24px 24px;
+  width: 320px;
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+  border: 2px solid #00e5ff;
+  animation: screenGlow 2s infinite alternate;
+}
+
+@keyframes screenGlow {
+  from { box-shadow: 0 0 24px 4px #00e5ff, 0 0 0 4px #fff inset; }
+  to { box-shadow: 0 0 40px 8px #00e5ff, 0 0 0 4px #fff inset; }
+}
+
+.pokedex-right .pokemonScreen img {
+  width: 160px;
+  height: 160px;
+  margin-bottom: 18px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 0 16px 2px #00e5ff, 0 0 0 2px #fff inset;
+  border: 3px solid #00e5ff;
+  object-fit: contain;
+  display: block;
+}
+
+.pokedex-right .pokemonScreen h3 {
+  color: #fff;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 1.2rem;
+  margin: 0 0 10px 0;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 8px #00e5ff;
+}
+
+.pokemon-types {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.pokemon-type {
+  padding: 4px 14px;
+  border-radius: 20px;
+  color: #fff;
+  font-size: 0.95em;
+  font-family: 'Press Start 2P', monospace;
+  font-weight: bold;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  border: 2px solid #fff;
+  text-shadow: 0 1px 2px #000;
+}
+
+.pokemon-type.feu { background: linear-gradient(90deg, #ff9800, #ff5722); }
+.pokemon-type.eau { background: linear-gradient(90deg, #2196f3, #00bcd4); }
+.pokemon-type.plante { background: linear-gradient(90deg, #43ea7a, #388e3c); }
+.pokemon-type.electrik { background: linear-gradient(90deg, #fff700, #ffe082); color: #333; }
+.pokemon-type.poison { background: linear-gradient(90deg, #9c27b0, #7b1fa2); }
+.pokemon-type.vol { background: linear-gradient(90deg, #81d4fa, #0288d1); }
+.pokemon-type.insecte { background: linear-gradient(90deg, #cddc39, #8bc34a); color: #333; }
+.pokemon-type.normal { background: linear-gradient(90deg, #bdbdbd, #757575); }
+.pokemon-type.sol { background: linear-gradient(90deg, #ffb74d, #a1887f); }
+.pokemon-type.roche { background: linear-gradient(90deg, #a1887f, #6d4c41); }
+.pokemon-type.spectre { background: linear-gradient(90deg, #7e57c2, #512da8); }
+.pokemon-type.tenebres { background: linear-gradient(90deg, #616161, #212121); }
+.pokemon-type.acier { background: linear-gradient(90deg, #b0bec5, #78909c); color: #333; }
+.pokemon-type.fee { background: linear-gradient(90deg, #f8bbd0, #f06292); color: #333; }
+.pokemon-type.combat { background: linear-gradient(90deg, #e57373, #d32f2f); }
+.pokemon-type.glace { background: linear-gradient(90deg, #b3e5fc, #00bcd4); color: #333; }
+.pokemon-type.dragon { background: linear-gradient(90deg, #1976d2, #ff8c00); }
+
+.pokedex-right .pokemonScreen .pokemon-infos {
+  color: #fff;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.95em;
+  margin-bottom: 8px;
+  text-align: left;
+  width: 100%;
+}
+
+.pokedex-right .pokemonScreen .pokemon-description {
+  margin-top: 16px;
+  font-style: italic;
+  color: #bdbdbd;
+  font-size: 0.95em;
+  background: rgba(0,0,0,0.15);
+  border-radius: 8px;
+  padding: 8px 10px;
+  width: 100%;
+  min-height: 48px;
+  box-shadow: 0 1px 4px #00e5ff33;
+}
+
+/* --- Fin Style Pokédex Livre --- */
+
+/* --- Soleil animé --- */
+.sun {
+  position: absolute;
+  top: 40px;
+  left: 60px;
+  width: 90px;
+  height: 90px;
+  background: radial-gradient(circle at 60% 40%, #fffde4 0%, #ffe082 40%, #ffd600 70%, #ff9800 100%);
+  border-radius: 50%;
+  box-shadow: 0 0 60px 20px #ffd60099, 0 0 120px 40px #ff980055;
+  z-index: 2;
+  opacity: 0.95;
+}
+
+/* --- Île et palmier --- */
+.island {
+  position: absolute;
+  right: 60px;
+  bottom: 40px;
+  width: 120px;
+  height: 60px;
+  z-index: 2;
+  pointer-events: none;
+}
+.island-shape {
+  position: absolute;
+  bottom: 0;
+  left: 10px;
+  width: 100px;
+  height: 32px;
+  background: radial-gradient(ellipse at 50% 80%, #ffe082 60%, #ffb300 100%);
+  border-radius: 50% 50% 60% 60%/60% 60% 100% 100%;
+  box-shadow: 0 8px 16px #ffb30055;
+}
+.palm {
+  position: absolute;
+  left: 60px;
+  bottom: 18px;
+  width: 32px;
+  height: 60px;
+  z-index: 3;
+}
+.palm-trunk {
+  position: absolute;
+  left: 14px;
+  bottom: 0;
+  width: 6px;
+  height: 38px;
+  background: linear-gradient(120deg, #a0522d 60%, #ffe082 100%);
+  border-radius: 6px 6px 10px 10px;
+  box-shadow: 0 2px 6px #a0522d77;
+}
+.palm-leaf {
+  position: absolute;
+  width: 38px;
+  height: 18px;
+  background: radial-gradient(ellipse at 60% 60%, #43ea7a 60%, #388e3c 100%);
+  border-radius: 50% 50% 60% 60%/60% 60% 100% 100%;
+  opacity: 0.85;
+}
+.leaf1 {
+  left: -18px;
+  top: 2px;
+  transform: rotate(-30deg);
+}
+.leaf2 {
+  left: 6px;
+  top: -8px;
+  transform: rotate(10deg);
+}
+.leaf3 {
+  left: 10px;
+  top: 10px;
+  transform: rotate(40deg);
+}
+/* --- Fin soleil, île et palmier --- */
+
+/* Animation d'apparition du livre Pokédex */
+.pokedex-animated {
+  animation: bookAppear 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+  position: relative;
+}
+@keyframes bookAppear {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) rotateY(-30deg) translateY(60px);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.05) rotateY(5deg) translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotateY(0deg) translateY(0);
+  }
+}
+
+.signature {
+  position: absolute;
+  left: 0;
+  bottom: -32px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.85em;
+  color: #b71c1c;
+  opacity: 0.7;
+  letter-spacing: 1px;
+  padding-left: 8px;
+  z-index: 10;
+}
+
+.clock-bar {
+  width: 100vw;
+  text-align: center;
+  padding: 12px 0 0 0;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 1em;
+  color: #1E2A38;
+  opacity: 0.8;
+  letter-spacing: 1px;
+  z-index: 10;
+}
+
+.clock-bar p {
+  margin: 0;
+  font-size: 1em;
 }

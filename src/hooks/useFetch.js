@@ -1,4 +1,5 @@
 import {useState, useEffect} from 'react';
+import axios from 'axios';
 
 function useFetch(url){
     const [data, setData] = useState(null);
@@ -6,17 +7,26 @@ function useFetch(url){
     const [loading, setLoading] = useState(true);
 
     useEffect(() =>{
-        fetch(url)
-            .then((response) => response.json())
-            .then((data) =>{
-                setData(data);
-                setLoading(false);
-            })
-            .catch((error) =>{
-                setError(error);
-                setLoading(false);
-            });
-    }, [url]);
+        setLoading('loading...')
+      setData(null);
+      setError(null);
+      const source = axios.CancelToken.source();
+      axios.get(url, { cancelToken: source.token })
+      .then(res => {
+          setLoading(false);
+          //checking for multiple responses for more flexibility 
+          //with the url we send in.
+          res.data.content && setData(res.data.content);
+          res.content && setData(res.content);
+      })
+      .catch(err => {
+          setLoading(false)
+          setError('An error occurred. Awkward..')
+      })
+      return () => {
+          source.cancel();
+      }
+  }, [url])
 
   return {data, loading, error};
 }
